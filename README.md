@@ -18,14 +18,15 @@ It referenced the [MongoDB with Mongoose example](https://github.com/vercel/next
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Get the project stored locally
+git clone https://github.com/Zhusufeng/auto-amigo-mongo.git
+
+# Install the dependencies
+npm i
+
+# Run the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
