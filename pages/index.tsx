@@ -3,18 +3,9 @@ import useSWR from "swr";
 import { useState} from 'react';
 import GasForm from "../components/GasForm";
 import UserForm from "../components/UserForm";
+import GasTable from "../components/GasTable";
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
-
-type Log = {
-  _id: string;
-  previousMileage: number;
-  currentMileage: number;
-  gallons: number;
-  pricePerGallon: number;
-  createdAt: string;
-  updatedAt: string;
-};
 
 type User = {
   _id: string;
@@ -72,28 +63,7 @@ const Table = () => {
       <h2>Add New Gas Entry</h2>
       <GasForm gasForm={gasForm} userId={userId} />
       <h2>Gas History</h2>
-      <table>
-        <thead>
-          <tr>
-            <td>Previous Mileage</td>
-            <td>Current Mileage</td>
-            <td>Gallons</td>
-            <td>Price Per Gallon</td>
-          </tr>
-        </thead>
-        <tbody>
-          {gasData?.data?.gasEntries ? gasData.data.gasEntries.map((log: Log) => {
-            return (
-              <tr key={log._id as any}>
-                <td>{log.previousMileage.toString()}</td>
-                <td>{log.currentMileage.toString()}</td>
-                <td>{log.gallons.toString()}</td>
-                <td>{log.pricePerGallon.toString()}</td>
-              </tr>
-            );
-          }) : null}
-        </tbody>
-      </table>
+      <GasTable tableData={gasData?.data?.gasEntries} />
     </div>
   );
 };
