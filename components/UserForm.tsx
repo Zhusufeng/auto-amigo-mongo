@@ -1,26 +1,11 @@
-import { useState } from "react";
 import { mutate } from "swr";
+import { Button, Form, Input } from 'antd';
 
-type Props = {
-  userForm: {
-    firstName: string;
-    lastName: string;
-    email: string;
-  };
-};
-
-const Form = ({ userForm }: Props) => {
+const UserForm = () => {
   const contentType = "application/json";
-  const [message, setMessage] = useState("");
-
-  const [form, setForm] = useState({
-    firstName: userForm.firstName,
-    lastName: userForm.lastName,
-    email: userForm.email,
-  });
 
   /* The POST method adds a new entry in the mongodb database. */
-  const postData = async (form: {
+  const onFinish = async (values: {
     firstName: string;
     lastName: string;
     email: string;
@@ -32,7 +17,7 @@ const Form = ({ userForm }: Props) => {
           Accept: contentType,
           "Content-Type": contentType,
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify(values),
       });
 
       // Throw error with status code in case Fetch API req failed
@@ -41,66 +26,52 @@ const Form = ({ userForm }: Props) => {
       }
       mutate("/api/user");
     } catch (error) {
-      setMessage("Failed to add user");
+      // TODO show notification
+      console.log('Did not add user', error);
     }
   };
 
-  const handleChange = (e: { target: any }) => {
-    const target = e.target;
-    const { value, name } = target;
-
-    setForm({
-      ...form,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    postData(form);
-  };
-
   return (
-    <>
-      <form id="add-user-form" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="firstName">firstName</label>
-          <input
-            type="text"
-            name="firstName"
-            value={form.firstName}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="lastName">lastName</label>
-          <input
-            type="text"
-            name="lastName"
-            value={form.lastName}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="email">email</label>
-          <input
-            type="text"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
+    <Form
+    name="basic"
+    labelCol={{ span: 8 }}
+    wrapperCol={{ span: 16 }}
+    style={{ maxWidth: 600 }}
+    onFinish={onFinish}
+  >
+    <Form.Item
+      label="First Name"
+      name="firstName"
+      rules={[{ required: true, message: 'Please input your first name!' }]}
+    >
+      <Input />
+    </Form.Item>
 
-        <button type="submit" className="btn">
-          Submit
-        </button>
-      </form>
-      <p>{message}</p>
-    </>
+    <Form.Item
+      label="Last Name"
+      name="lastName"
+      rules={[{ required: true, message: 'Please input your last name!' }]}
+    >
+      <Input />
+    </Form.Item>
+
+    <Form.Item
+      label="Email"
+      name="email"
+      rules={[{ required: true, message: 'Please input your email!' }]}
+    >
+      <Input />
+    </Form.Item>
+
+    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+      <Button type="primary" htmlType="submit">
+        Submit
+      </Button>
+    </Form.Item>
+  </Form>
+
+
   );
 };
 
-export default Form;
+export default UserForm;
