@@ -37,7 +37,6 @@ const Form = ({ gasForm, userId }: Props) => {
         gallons: parseInt(gallons, 10),
         pricePerGallon: parseInt(pricePerGallon, 10),
       };
-      console.log("data", data);
       const url = `/api/gas/${userId}`;
       const res = await fetch(url, {
         method: "POST",
@@ -52,7 +51,7 @@ const Form = ({ gasForm, userId }: Props) => {
       if (!res.ok) {
         throw new Error(res.status);
       }
-      mutate("/api/gas");
+      mutate(`/api/user/${userId}`);
     } catch (error) {
       setMessage("Failed to add gas");
     }
