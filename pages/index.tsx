@@ -46,14 +46,6 @@ const Table = () => {
   const userHandleClick = (id: string) => {
     setUserId(id)
   }
-/**
- * Create API to create user
- * Use API to create users
- * On the UI, list all users
- * A user may be selected (clicked on)
- * It should show all the gas logs for that user only
- * and the form adds a new entry, which belongs to that user
- */
 
   return (
     <div>
@@ -78,7 +70,7 @@ const Table = () => {
         </ul>
       </div>
       <h2>Add New Gas Entry</h2>
-      <GasForm gasForm={gasForm} />
+      <GasForm gasForm={gasForm} userId={userId} />
       <h2>Gas History</h2>
       <table>
         <thead>
