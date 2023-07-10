@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { mutate } from "swr";
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Modal } from 'antd';
 
-const UserForm = () => {
+type Props = {
+  isModalOpen: boolean;
+};
+
+const UserFormModal = ({ isModalOpen }: Props) => {
   const contentType = "application/json";
   const [message, setMessage] = useState("");
 
@@ -33,7 +37,7 @@ const UserForm = () => {
   };
 
   return (
-    <div>
+    <Modal open={isModalOpen}>
       <p>{message}</p>
       <Form
         name="basic"
@@ -72,8 +76,9 @@ const UserForm = () => {
           </Button>
         </Form.Item>
       </Form>
-    </div>
-  );
+
+    </Modal>
+  )
 };
 
-export default UserForm;
+export default UserFormModal;
