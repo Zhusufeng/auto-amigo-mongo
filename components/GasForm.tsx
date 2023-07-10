@@ -1,36 +1,24 @@
 import { useState } from "react";
 import { mutate } from "swr";
+import { Button, Form, Input } from 'antd';
 
 type Props = {
-  gasForm: {
-    previousMileage: string;
-    currentMileage: string;
-    gallons: string;
-    pricePerGallon: string;
-  };
   userId: string;
 };
 
-const Form = ({ gasForm, userId }: Props) => {
+const GasForm = ({ userId }: Props) => {
   const contentType = "application/json";
   const [message, setMessage] = useState("");
 
-  const [form, setForm] = useState({
-    previousMileage: gasForm.previousMileage,
-    currentMileage: gasForm.currentMileage,
-    gallons: gasForm.gallons,
-    pricePerGallon: gasForm.pricePerGallon,
-  });
-
   /* The POST method adds a new entry in the mongodb database. */
-  const postData = async (form: {
+  const onFinish = async (values: {
     previousMileage: string;
     currentMileage: string;
     gallons: string;
     pricePerGallon: string;
   }) => {
     try {
-      const { previousMileage, currentMileage, gallons, pricePerGallon } = form;
+      const { previousMileage, currentMileage, gallons, pricePerGallon } = values;
       const data = {
         previousMileage: parseInt(previousMileage, 10),
         currentMileage: parseInt(currentMileage, 10),
@@ -57,71 +45,56 @@ const Form = ({ gasForm, userId }: Props) => {
     }
   };
 
-  const handleChange = (e: { target: any }) => {
-    const target = e.target;
-    const { value, name } = target;
-
-    setForm({
-      ...form,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    postData(form);
-  };
-
   return (
-    <>
-      <form id="add-gas-form" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="previousMileage">previousMileage</label>
-          <input
-            type="text"
-            name="previousMileage"
-            value={form.previousMileage}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="currentMileage">currentMileage</label>
-          <input
-            type="text"
-            name="currentMileage"
-            value={form.currentMileage}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="gallons">gallons</label>
-          <input
-            type="text"
-            name="gallons"
-            value={form.gallons}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="pricePerGallon">pricePerGallon</label>
-          <input
-            type="number"
-            name="pricePerGallon"
-            value={form.pricePerGallon}
-            onChange={handleChange}
-          />
-        </div>
-
-        <button type="submit" className="btn">
-          Submit
-        </button>
-      </form>
+    <div>
       <p>{message}</p>
-    </>
+      <Form
+        name="basic"
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+        style={{ maxWidth: 600 }}
+        onFinish={onFinish}
+      >
+        <Form.Item
+          label="Previous Mileage"
+          name="previousMileage"
+          rules={[{ required: true, message: 'Please input your previous mileage!' }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Current Mileage"
+          name="currentMileage"
+          rules={[{ required: true, message: 'Please input your current mileage!' }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="gallons"
+          name="gallons"
+          rules={[{ required: true, message: 'Please input your gallons!' }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Price Per Gallon"
+          name="pricePerGallon"
+          rules={[{ required: true, message: 'Please input your price per gallon!' }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>
   );
 };
 
-export default Form;
+export default GasForm;
