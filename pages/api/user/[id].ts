@@ -14,7 +14,7 @@ export default async function handler(
     case "GET":
       try {
         const { id } = req.query;
-        const user = await User.findById(id);
+        const user = await User.findById(id).populate('gasEntries');
         res.status(200).json({ success: true, data: user });
       } catch (error) {
         res.status(400).json({ success: false });
