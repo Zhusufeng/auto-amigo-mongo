@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import dbConnect from "../../lib/dbConnect";
-import Gas from "../../models/gas.model";
+import dbConnect from "../../../lib/dbConnect";
+import Gas from "../../../models/gas.model";
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,7 +13,7 @@ export default async function handler(
   switch (method) {
     case "GET":
       try {
-        const gas = await Gas.find({}); /* find all the data in our database */
+        const gas = await Gas.find({ });
         res.status(200).json({ success: true, data: gas });
       } catch (error) {
         res.status(400).json({ success: false });
