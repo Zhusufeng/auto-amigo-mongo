@@ -8,9 +8,10 @@ type Props = {
     gallons: string;
     pricePerGallon: string;
   };
+  userId: string;
 };
 
-const Form = ({ gasForm }: Props) => {
+const Form = ({ gasForm, userId }: Props) => {
   const contentType = "application/json";
   const [message, setMessage] = useState("");
 
@@ -37,7 +38,8 @@ const Form = ({ gasForm }: Props) => {
         pricePerGallon: parseInt(pricePerGallon, 10),
       };
       console.log("data", data);
-      const res = await fetch("/api/gas", {
+      const url = `/api/gas/${userId}`;
+      const res = await fetch(url, {
         method: "POST",
         headers: {
           Accept: contentType,
