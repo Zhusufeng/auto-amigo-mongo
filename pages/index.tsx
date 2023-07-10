@@ -66,7 +66,11 @@ const Table = () => {
         {userData?.data.map((user: User) => {
             const userString = `${user.firstName} ${user.lastName} (${user.email})`
             return (
-              <li key={user._id as string} onClick={() => userHandleClick(user._id)}>
+              <li 
+                style={{ color: userId === user._id ? 'blue' : 'black'}} 
+                key={user._id as string} 
+                onClick={() => userHandleClick(user._id)}
+              >
                 {userString}
               </li>
             );
@@ -97,7 +101,7 @@ const Table = () => {
             );
           }) : null}
         </tbody>
-      </table>{" "}
+      </table>
     </div>
   );
 };
