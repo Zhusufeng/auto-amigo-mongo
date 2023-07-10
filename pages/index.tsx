@@ -39,9 +39,9 @@ const Table = () => {
     email: ''
   }
 
-  const { data: gasData, error: gasError } = useSWR("/api/gas", fetcher);
+  const { data: gasData, error: gasError } = useSWR(`/api/user/${userId}`, fetcher);
   const { data: userData, error: userError } = useSWR("/api/user", fetcher);
-  console.log("userData", userData);
+  console.log("gasData", gasData);
 
   const userHandleClick = (id: string) => {
     setUserId(id)
@@ -86,7 +86,7 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {gasData?.data.map((log: Log) => {
+          {gasData?.data?.gasEntries ? gasData.data.gasEntries.map((log: Log) => {
             return (
               <tr key={log._id as any}>
                 <td>{log.previousMileage.toString()}</td>
@@ -95,7 +95,7 @@ const Table = () => {
                 <td>{log.pricePerGallon.toString()}</td>
               </tr>
             );
-          })}
+          }) : null}
         </tbody>
       </table>{" "}
     </div>
