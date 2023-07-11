@@ -4,9 +4,10 @@ import { Button, Form, Input, Modal } from 'antd';
 
 type Props = {
   isModalOpen: boolean;
+  setModalStatus: (status: boolean) => void;
 };
 
-const UserFormModal = ({ isModalOpen }: Props) => {
+const UserFormModal = ({ isModalOpen, setModalStatus }: Props) => {
   const contentType = "application/json";
   const [message, setMessage] = useState("");
 
@@ -31,13 +32,18 @@ const UserFormModal = ({ isModalOpen }: Props) => {
         throw new Error(res.status);
       }
       mutate("/api/user");
+      setModalStatus(false);
     } catch (error) {
       setMessage("Failed to add user");
     }
   };
 
   return (
-    <Modal open={isModalOpen}>
+    <Modal 
+      open={isModalOpen} 
+      footer={null}
+      closable={false}
+    >
       <p>{message}</p>
       <Form
         name="basic"
@@ -75,8 +81,13 @@ const UserFormModal = ({ isModalOpen }: Props) => {
             Submit
           </Button>
         </Form.Item>
-      </Form>
 
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Button type="default" onClick={() => setModalStatus(false)}>
+            Cancel
+          </Button>
+        </Form.Item>
+      </Form>
     </Modal>
   )
 };
