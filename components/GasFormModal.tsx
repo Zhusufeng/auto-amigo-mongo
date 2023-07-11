@@ -42,6 +42,7 @@ const onFinish = async (values: {
       throw new Error(res.status);
     }
     mutate(`/api/user/${userId}`);
+    setModalStatus(false);
   } catch (error) {
     setMessage("Failed to add gas");
   }
