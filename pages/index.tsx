@@ -61,10 +61,18 @@ const Table = () => {
           })}
         </ul>
       </div>
-      <Button type="primary" onClick={() => setIsGasModalOpen(true)}>Add Gas Entry</Button>
-
-      <h2>Gas History</h2>
-      <GasTable tableData={gasData?.data?.gasEntries} />
+      {userId 
+        ? 
+          (
+            <div>
+              <Button type="primary" onClick={() => setIsGasModalOpen(true)}>Add Gas Entry</Button>
+              <h2>Gas History</h2>
+              <GasTable tableData={gasData?.data?.gasEntries} />
+            </div>
+          )
+        :
+          null
+      }
     </div>
   );
 };
