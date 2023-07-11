@@ -1,20 +1,12 @@
+import useSWR, { mutate } from "swr";
 import axios from "axios";
-import useSWR from "swr";
-import { useState} from 'react';
-import GasForm from "../components/GasForm";
-import UserForm from "../components/UserForm";
+import { useState } from 'react';
+import { Button } from 'antd';
+import GasFormModal from "../components/GasFormModal";
+import UserFormModal from "../components/UserFormModal";
+import GasTable from "../components/GasTable";
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
-
-type Log = {
-  _id: string;
-  previousMileage: number;
-  currentMileage: number;
-  gallons: number;
-  pricePerGallon: number;
-  createdAt: string;
-  updatedAt: string;
-};
 
 type User = {
   _id: string;
@@ -27,35 +19,35 @@ type User = {
 
 const Table = () => {
   const [userId, setUserId] = useState('');
-  const gasForm = {
-    previousMileage: "",
-    currentMileage: "",
-    gallons: "",
-    pricePerGallon: "",
-  };
-  const userForm = {
-    firstName: '',
-    lastName: '', 
-    email: ''
-  }
+  const [isUserModalOpen, setIsUserModalOpen] = useState(false);
+  const [isGasModalOpen, setIsGasModalOpen] = useState(false);
 
-  const { data: gasData, error: gasError } = useSWR(`/api/user/${userId}`, fetcher);
-  const { data: userData, error: userError } = useSWR("/api/user", fetcher);
-  console.log("gasData", gasData);
+  const { data: users, error: userError } = useSWR("/api/user", fetcher);
+  const { data: gasData = [], error: gasError } = useSWR(`/api/user/${userId}`, fetcher);
 
   const userHandleClick = (id: string) => {
-    setUserId(id)
+    setUserId(id);
+    mutate(`/api/user/${userId}`);
   }
 
   return (
     <div>
+      <UserFormModal 
+        isModalOpen={isUserModalOpen} 
+        setModalStatus={setIsUserModalOpen} 
+      />
+      <GasFormModal 
+        isModalOpen={isGasModalOpen} 
+        setModalStatus={setIsGasModalOpen} 
+        userId={userId} 
+      />
       <h1>Auto Amigo Mongo</h1>
-      <h2>Create User</h2>
-      <UserForm userForm={userForm} />
+      <Button type="primary" onClick={() => setIsUserModalOpen(true)}>Create User</Button>
+
       <h2>Users</h2>
       <div>
         <ul>
-        {userData?.data.map((user: User) => {
+        {users?.data.map((user: User) => {
             const userString = `${user.firstName} ${user.lastName} (${user.email})`
             return (
               <li 
@@ -69,31 +61,18 @@ const Table = () => {
           })}
         </ul>
       </div>
-      <h2>Add New Gas Entry</h2>
-      <GasForm gasForm={gasForm} userId={userId} />
-      <h2>Gas History</h2>
-      <table>
-        <thead>
-          <tr>
-            <td>Previous Mileage</td>
-            <td>Current Mileage</td>
-            <td>Gallons</td>
-            <td>Price Per Gallon</td>
-          </tr>
-        </thead>
-        <tbody>
-          {gasData?.data?.gasEntries ? gasData.data.gasEntries.map((log: Log) => {
-            return (
-              <tr key={log._id as any}>
-                <td>{log.previousMileage.toString()}</td>
-                <td>{log.currentMileage.toString()}</td>
-                <td>{log.gallons.toString()}</td>
-                <td>{log.pricePerGallon.toString()}</td>
-              </tr>
-            );
-          }) : null}
-        </tbody>
-      </table>
+      {userId 
+        ? 
+          (
+            <div>
+              <Button type="primary" onClick={() => setIsGasModalOpen(true)}>Add Gas Entry</Button>
+              <h2>Gas History</h2>
+              <GasTable tableData={gasData?.data?.gasEntries} />
+            </div>
+          )
+        :
+          null
+      }
     </div>
   );
 };

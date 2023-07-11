@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Gas from './gas.model';
 
 const UserSchema = new mongoose.Schema(
   {
@@ -8,7 +9,7 @@ const UserSchema = new mongoose.Schema(
     gasEntries: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Gas",
+        ref: Gas.modelName,
       },
     ],
   },
