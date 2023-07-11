@@ -31,8 +31,15 @@ const Table = () => {
 
   return (
     <div>
-      <UserFormModal isModalOpen={isUserModalOpen} setModalStatus={setIsUserModalOpen} />
-      <GasFormModal isModalOpen={isGasModalOpen} userId={userId} />
+      <UserFormModal 
+        isModalOpen={isUserModalOpen} 
+        setModalStatus={setIsUserModalOpen} 
+      />
+      <GasFormModal 
+        isModalOpen={isGasModalOpen} 
+        setModalStatus={setIsGasModalOpen} 
+        userId={userId} 
+      />
       <h1>Auto Amigo Mongo</h1>
       <Button type="primary" onClick={() => setIsUserModalOpen(true)}>Create User</Button>
 
