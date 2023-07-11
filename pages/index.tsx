@@ -1,6 +1,6 @@
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import axios from "axios";
-import { useState} from 'react';
+import { useState } from 'react';
 import { Button } from 'antd';
 import GasFormModal from "../components/GasFormModal";
 import UserFormModal from "../components/UserFormModal";
@@ -22,11 +22,12 @@ const Table = () => {
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
   const [isGasModalOpen, setIsGasModalOpen] = useState(false);
 
-  const { data: gasData, error: gasError } = useSWR(`/api/user/${userId}`, fetcher);
-  const { data: userData, error: userError } = useSWR("/api/user", fetcher);
+  const { data: users, error: userError } = useSWR("/api/user", fetcher);
+  const { data: gasData = [], error: gasError } = useSWR(`/api/user/${userId}`, fetcher);
 
   const userHandleClick = (id: string) => {
-    setUserId(id)
+    setUserId(id);
+    mutate(`/api/user/${userId}`);
   }
 
   return (
@@ -46,7 +47,7 @@ const Table = () => {
       <h2>Users</h2>
       <div>
         <ul>
-        {userData?.data.map((user: User) => {
+        {users?.data.map((user: User) => {
             const userString = `${user.firstName} ${user.lastName} (${user.email})`
             return (
               <li 
