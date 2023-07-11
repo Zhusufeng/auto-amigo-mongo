@@ -1,8 +1,9 @@
-import axios from "axios";
 import useSWR from "swr";
+import axios from "axios";
 import { useState} from 'react';
-import GasForm from "../components/GasForm";
-import UserForm from "../components/UserForm";
+import { Button } from 'antd';
+import GasFormModal from "../components/GasFormModal";
+import UserFormModal from "../components/UserFormModal";
 import GasTable from "../components/GasTable";
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
@@ -18,21 +19,11 @@ type User = {
 
 const Table = () => {
   const [userId, setUserId] = useState('');
-  const gasForm = {
-    previousMileage: "",
-    currentMileage: "",
-    gallons: "",
-    pricePerGallon: "",
-  };
-  const userForm = {
-    firstName: '',
-    lastName: '', 
-    email: ''
-  }
+  const [isUserModalOpen, setIsUserModalOpen] = useState(false);
+  const [isGasModalOpen, setIsGasModalOpen] = useState(false);
 
   const { data: gasData, error: gasError } = useSWR(`/api/user/${userId}`, fetcher);
   const { data: userData, error: userError } = useSWR("/api/user", fetcher);
-  console.log("gasData", gasData);
 
   const userHandleClick = (id: string) => {
     setUserId(id)
@@ -40,9 +31,11 @@ const Table = () => {
 
   return (
     <div>
+      <UserFormModal isModalOpen={isUserModalOpen} setModalStatus={setIsUserModalOpen} />
+      <GasFormModal isModalOpen={isGasModalOpen} userId={userId} />
       <h1>Auto Amigo Mongo</h1>
-      <h2>Create User</h2>
-      <UserForm userForm={userForm} />
+      <Button type="primary" onClick={() => setIsUserModalOpen(true)}>Create User</Button>
+
       <h2>Users</h2>
       <div>
         <ul>
@@ -60,8 +53,8 @@ const Table = () => {
           })}
         </ul>
       </div>
-      <h2>Add New Gas Entry</h2>
-      <GasForm gasForm={gasForm} userId={userId} />
+      <Button type="primary" onClick={() => setIsGasModalOpen(true)}>Add Gas Entry</Button>
+
       <h2>Gas History</h2>
       <GasTable tableData={gasData?.data?.gasEntries} />
     </div>
