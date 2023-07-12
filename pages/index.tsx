@@ -2,9 +2,8 @@ import useSWR, { mutate } from "swr";
 import axios from "axios";
 import { useState } from 'react';
 import { Button, Card, Layout, Space, Tag, Tooltip } from 'antd';
-import GasFormModal from "../components/GasFormModal";
 import UserFormModal from "../components/UserFormModal";
-import GasTable from "../components/GasTable";
+import GasCard from "../components/GasCard";
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
@@ -29,10 +28,8 @@ const INITIAL_USER = {
 const Home = () => {
   const [user, setUser] = useState<User>(INITIAL_USER);
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
-  const [isGasModalOpen, setIsGasModalOpen] = useState(false);
 
   const { data: users, error: userError } = useSWR("/api/user", fetcher);
-  const { data: gasData = [], error: gasError } = useSWR(`/api/user/${user._id}`, fetcher);
 
   const userHandleClick = (user: User) => {
     setUser(user);
@@ -43,17 +40,12 @@ const Home = () => {
   return (
     <Layout style={{ height: '100vh' }}>
       <Layout.Content>
+        <h1>Auto Amigo Mongo</h1>
         <UserFormModal 
           isModalOpen={isUserModalOpen} 
           setModalStatus={setIsUserModalOpen} 
         />
-        <GasFormModal 
-          isModalOpen={isGasModalOpen} 
-          setModalStatus={setIsGasModalOpen} 
-          userId={user._id} 
-        />
-        <h1>Auto Amigo Mongo</h1>
-
+        
         <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
           <Card title="Users" style={{ maxWidth: '600px' }}>
             <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
@@ -88,23 +80,7 @@ const Home = () => {
                 </div>
               </Space>
           </Card>
-          {user._id 
-            ? 
-              (
-                <Card title={`${user.firstName} ${user.lastName}'s Gas History`} style={{ maxWidth: '600px' }}>
-                  <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      <Tooltip title={`Add a new gas entry for user, ${user.firstName} ${user.lastName}`}>
-                        <Button type="primary" onClick={() => setIsGasModalOpen(true)}>Add Gas Entry</Button>
-                      </Tooltip>
-                    </div>
-                    <GasTable tableData={gasData?.data?.gasEntries} />
-                  </Space>
-                </Card>
-              )
-            :
-              null
-          }
+          {user._id ? <GasCard user={user} /> : null}
         </Space>
       </Layout.Content>
     </Layout>
