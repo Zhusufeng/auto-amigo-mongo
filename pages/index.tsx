@@ -1,7 +1,7 @@
 import useSWR, { mutate } from "swr";
 import axios from "axios";
 import { useState } from 'react';
-import { Button, Tag, Tooltip } from 'antd';
+import { Button, Card, Tag, Tooltip } from 'antd';
 import GasFormModal from "../components/GasFormModal";
 import UserFormModal from "../components/UserFormModal";
 import GasTable from "../components/GasTable";
@@ -42,11 +42,19 @@ const Table = () => {
         userId={userId} 
       />
       <h1>Auto Amigo Mongo</h1>
-      <Button type="primary" onClick={() => setIsUserModalOpen(true)}>Create User</Button>
 
-      <h2>Users</h2>
-      <div>
-        <p>Select a user</p>
+      <Card title="Users" style={{ maxWidth: '600px' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Tooltip title="Create a new user">
+            <Button 
+              type="primary" 
+              onClick={() => setIsUserModalOpen(true)}
+            >
+              Create User
+            </Button>
+          </Tooltip>
+        </div>
+        <p>Select a user to view their gas log or to add to their gas log.</p>
         {users?.data.map((user: User) => {
             const userString = `${user.firstName} ${user.lastName}`
             return (
@@ -63,7 +71,7 @@ const Table = () => {
               </Tooltip>
             );
           })}
-      </div>
+      </Card>
       {userId 
         ? 
           (
