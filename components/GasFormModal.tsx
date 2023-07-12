@@ -56,7 +56,7 @@ const onFinish = async (values: {
     >
       <p>{message}</p>
       <Form
-        name="basic"
+        name="gas-form"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
         style={{ maxWidth: 600 }}
@@ -97,10 +97,7 @@ const onFinish = async (values: {
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit">
             Submit
-          </Button>
-        </Form.Item>
-
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          </Button>{" "}
           <Button type="default" onClick={() => setModalStatus(false)}>
             Cancel
           </Button>

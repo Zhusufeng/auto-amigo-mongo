@@ -1,14 +1,5 @@
 import { Table} from 'antd';
-
-type Log = {
-  _id: string;
-  previousMileage: number;
-  currentMileage: number;
-  gallons: number;
-  pricePerGallon: number;
-  createdAt: string;
-  updatedAt: string;
-};
+import { Log } from '../lib/types';
 
 type Props = {
   tableData: Log[];

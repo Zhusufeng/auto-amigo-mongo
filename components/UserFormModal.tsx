@@ -46,7 +46,7 @@ const UserFormModal = ({ isModalOpen, setModalStatus }: Props) => {
     >
       <p>{message}</p>
       <Form
-        name="basic"
+        name="user-form"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
         style={{ maxWidth: 600 }}
@@ -79,10 +79,7 @@ const UserFormModal = ({ isModalOpen, setModalStatus }: Props) => {
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit">
             Submit
-          </Button>
-        </Form.Item>
-
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          </Button>{" "}
           <Button type="default" onClick={() => setModalStatus(false)}>
             Cancel
           </Button>
