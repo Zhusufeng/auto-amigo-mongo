@@ -24,7 +24,7 @@ const GasCard = ({ user }: Props) => {
         setModalStatus={setIsGasModalOpen} 
         userId={user._id} 
       />
-      <Card title={`${user.firstName} ${user.lastName}'s Gas History`} style={{ maxWidth: '600px' }}>
+      <Card title={`${user.firstName} ${user.lastName}'s Gas History`}>
         <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <Tooltip title={`Add a new gas entry for user, ${user.firstName} ${user.lastName}`}>

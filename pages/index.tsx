@@ -31,16 +31,16 @@ const Home = () => {
 
   // TODO Fix white borders around Layout
   return (
-    <Layout style={{ height: '100vh' }}>
-      <Layout.Content>
-        <h1>Auto Amigo Mongo</h1>
+    <Layout style={{ height: "100vh" }}>
+      <Layout.Header style={{ color: "#ffffff" }}>Auto Amigo Mongo</Layout.Header>
+      <Layout.Content style={{ margin: "0 auto", padding: "20px" }}>
         <UserFormModal 
           isModalOpen={isUserModalOpen} 
           setModalStatus={setIsUserModalOpen} 
         />
         
         <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-          <Card title="Users" style={{ maxWidth: '600px' }}>
+          <Card title="Users">
             <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
               <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <Tooltip title="Create a new user">
