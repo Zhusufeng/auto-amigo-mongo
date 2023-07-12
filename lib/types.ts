@@ -6,3 +6,13 @@ export type User = {
   createdAt: string;
   updatedAt: string;
 }
+
+export type Log = {
+  _id: string;
+  previousMileage: number;
+  currentMileage: number;
+  gallons: number;
+  pricePerGallon: number;
+  createdAt: string;
+  updatedAt: string;
+};
