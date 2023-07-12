@@ -1,10 +1,11 @@
 import useSWR, { mutate } from "swr";
 import axios from "axios";
 import { useState } from 'react';
-import { Button, Card, Layout, Space, Tag, Tooltip } from 'antd';
+import { Button, Card, Layout, Space, Tooltip } from 'antd';
 import { User } from '../lib/types';
 import UserFormModal from "../components/UserFormModal";
 import GasCard from "../components/GasCard";
+import UsersList from "../components/UsersList";
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
@@ -52,25 +53,12 @@ const Home = () => {
                 </Tooltip>
               </div>
               <p>Select a user to view their gas log or to add to their gas log.</p>
-              <div>
-                {users?.data.map((u: User) => {
-                    const userString = `${u.firstName} ${u.lastName}`
-                    return (
-                      <Tooltip 
-                        key={u._id as string} 
-                        title={u.email}
-                      >
-                        <Tag 
-                          color={user._id === u._id ? "blue" : "lightgray"}
-                          onClick={() => userHandleClick(u)}
-                        >
-                          {userString}
-                        </Tag>
-                      </Tooltip>
-                    );
-                  })}
-                </div>
-              </Space>
+              <UsersList 
+                user={user} 
+                users={users} 
+                userHandleClick={userHandleClick} 
+              />
+            </Space>
           </Card>
           {user._id ? <GasCard user={user} /> : null}
         </Space>
