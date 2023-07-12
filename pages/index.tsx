@@ -1,7 +1,7 @@
 import useSWR, { mutate } from "swr";
 import axios from "axios";
 import { useState } from 'react';
-import { Button } from 'antd';
+import { Button, Tag } from 'antd';
 import GasFormModal from "../components/GasFormModal";
 import UserFormModal from "../components/UserFormModal";
 import GasTable from "../components/GasTable";
@@ -46,20 +46,19 @@ const Table = () => {
 
       <h2>Users</h2>
       <div>
-        <ul>
+        <p>Select a user</p>
         {users?.data.map((user: User) => {
-            const userString = `${user.firstName} ${user.lastName} (${user.email})`
+            const userString = `${user.firstName} ${user.lastName}`
             return (
-              <li 
-                style={{ color: userId === user._id ? 'blue' : 'black'}} 
+              <Tag 
+                color={userId === user._id ? "blue" : "lightgray"}
                 key={user._id as string} 
                 onClick={() => userHandleClick(user._id)}
               >
                 {userString}
-              </li>
+              </Tag>
             );
           })}
-        </ul>
       </div>
       {userId 
         ? 
