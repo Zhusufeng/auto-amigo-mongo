@@ -17,19 +17,29 @@ type User = {
   updatedAt: string;
 };
 
-const Table = () => {
-  const [userId, setUserId] = useState('');
+const INITIAL_USER = {
+  _id: '',
+  firstName: '',
+  lastName: '',
+  email: '',
+  createdAt: '',
+  updatedAt: ''
+}
+
+const Home = () => {
+  const [user, setUser] = useState<User>(INITIAL_USER);
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
   const [isGasModalOpen, setIsGasModalOpen] = useState(false);
 
   const { data: users, error: userError } = useSWR("/api/user", fetcher);
-  const { data: gasData = [], error: gasError } = useSWR(`/api/user/${userId}`, fetcher);
+  const { data: gasData = [], error: gasError } = useSWR(`/api/user/${user._id}`, fetcher);
 
-  const userHandleClick = (id: string) => {
-    setUserId(id);
-    mutate(`/api/user/${userId}`);
+  const userHandleClick = (user: User) => {
+    setUser(user);
+    mutate(`/api/user/${user._id}`);
   }
 
+  // TODO Fix white borders around Layout
   return (
     <Layout style={{ height: '100vh' }}>
       <Layout.Content>
@@ -40,7 +50,7 @@ const Table = () => {
         <GasFormModal 
           isModalOpen={isGasModalOpen} 
           setModalStatus={setIsGasModalOpen} 
-          userId={userId} 
+          userId={user._id} 
         />
         <h1>Auto Amigo Mongo</h1>
 
@@ -59,16 +69,16 @@ const Table = () => {
               </div>
               <p>Select a user to view their gas log or to add to their gas log.</p>
               <div>
-                {users?.data.map((user: User) => {
-                    const userString = `${user.firstName} ${user.lastName}`
+                {users?.data.map((u: User) => {
+                    const userString = `${u.firstName} ${u.lastName}`
                     return (
                       <Tooltip 
-                        key={user._id as string} 
-                        title={user.email}
+                        key={u._id as string} 
+                        title={u.email}
                       >
                         <Tag 
-                          color={userId === user._id ? "blue" : "lightgray"}
-                          onClick={() => userHandleClick(user._id)}
+                          color={user._id === u._id ? "blue" : "lightgray"}
+                          onClick={() => userHandleClick(u)}
                         >
                           {userString}
                         </Tag>
@@ -78,13 +88,13 @@ const Table = () => {
                 </div>
               </Space>
           </Card>
-          {userId 
+          {user._id 
             ? 
               (
-                <Card title={`USERS Gas History`} style={{ maxWidth: '600px' }}>
+                <Card title={`${user.firstName} ${user.lastName}'s Gas History`} style={{ maxWidth: '600px' }}>
                   <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      <Tooltip title={`Add a new gas entry for user, TODO`}>
+                      <Tooltip title={`Add a new gas entry for user, ${user.firstName} ${user.lastName}`}>
                         <Button type="primary" onClick={() => setIsGasModalOpen(true)}>Add Gas Entry</Button>
                       </Tooltip>
                     </div>
@@ -101,4 +111,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default Home;
