@@ -1,7 +1,7 @@
 import useSWR, { mutate } from "swr";
 import axios from "axios";
 import { useState } from 'react';
-import { Button, Tag } from 'antd';
+import { Button, Tag, Tooltip } from 'antd';
 import GasFormModal from "../components/GasFormModal";
 import UserFormModal from "../components/UserFormModal";
 import GasTable from "../components/GasTable";
@@ -50,13 +50,17 @@ const Table = () => {
         {users?.data.map((user: User) => {
             const userString = `${user.firstName} ${user.lastName}`
             return (
-              <Tag 
-                color={userId === user._id ? "blue" : "lightgray"}
+              <Tooltip 
                 key={user._id as string} 
-                onClick={() => userHandleClick(user._id)}
+                title={user.email}
               >
-                {userString}
-              </Tag>
+                <Tag 
+                  color={userId === user._id ? "blue" : "lightgray"}
+                  onClick={() => userHandleClick(user._id)}
+                >
+                  {userString}
+                </Tag>
+              </Tooltip>
             );
           })}
       </div>
