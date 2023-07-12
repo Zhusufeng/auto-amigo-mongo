@@ -2,19 +2,11 @@ import useSWR, { mutate } from "swr";
 import axios from "axios";
 import { useState } from 'react';
 import { Button, Card, Layout, Space, Tag, Tooltip } from 'antd';
+import { User } from '../lib/types';
 import UserFormModal from "../components/UserFormModal";
 import GasCard from "../components/GasCard";
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
-
-type User = {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  createdAt: string;
-  updatedAt: string;
-};
 
 const INITIAL_USER = {
   _id: '',

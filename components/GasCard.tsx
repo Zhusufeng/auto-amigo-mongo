@@ -2,20 +2,14 @@ import useSWR from "swr";
 import axios from "axios";
 import { useState } from 'react';
 import { Button, Card, Space, Tooltip } from 'antd';
+import { User } from '../lib/types';
 import GasFormModal from "../components/GasFormModal";
 import GasTable from "../components/GasTable";
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
 type Props = {
-  user: {
-    _id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    createdAt: string;
-    updatedAt: string;
-  }
+  user: User;
 };
 
 const GasCard = ({ user }: Props) => {
