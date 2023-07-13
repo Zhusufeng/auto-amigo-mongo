@@ -27,11 +27,17 @@ export default async function handler(
           const user = await User.create(req.body);
           res.status(201).json({ success: true, data: user });
         } else {
-          const userError = new Error(`Only ${MAX_USERS} users can be created`);
-          res.status(400).json({ success: false, error: userError });
+          const userError = new Error(`Only ${MAX_USERS} users can be created.`);
+          res.status(400).json({ 
+            success: false, 
+            errorMessage: userError.toString()
+          });
         }
       } catch (error) {
-        res.status(400).json({ success: false, error });
+        res.status(400).json({ 
+          success: false, 
+          errorMessage: String(error)
+        });
       }
       break;
     default:
