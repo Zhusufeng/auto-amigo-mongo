@@ -21,12 +21,17 @@ export default async function handler(
       break;
     case "POST":
       try {
-        const user = await User.create(
-          req.body
-        ); /* create a new model in the database */
-        res.status(201).json({ success: true, data: user });
+        const users = await User.find({});
+        const MAX_USERS = 7;
+        if (users.length < MAX_USERS) {
+          const user = await User.create(req.body);
+          res.status(201).json({ success: true, data: user });
+        } else {
+          const userError = new Error(`Only ${MAX_USERS} users can be created`);
+          res.status(400).json({ success: false, error: userError });
+        }
       } catch (error) {
-        res.status(400).json({ success: false });
+        res.status(400).json({ success: false, error });
       }
       break;
     default:
