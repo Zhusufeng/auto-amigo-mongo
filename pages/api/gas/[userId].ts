@@ -16,7 +16,7 @@ export default async function handler(
       try {
         const { userId } = req.query;
         const user = await User.findById(userId).populate('gasEntries');
-        const MAX_GAS_ENTRIES = 6;
+        const MAX_GAS_ENTRIES = 10;
         if (user.gasEntries.length < MAX_GAS_ENTRIES) {
           const gas = new Gas(req.body);
           await gas.save();
