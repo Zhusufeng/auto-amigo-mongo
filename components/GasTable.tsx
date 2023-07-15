@@ -32,7 +32,12 @@ const GasTable = (props: Props) => {
   ]
   if (!tableData) return null;
   return (
-    <Table columns={columns} dataSource={tableData} rowKey='_id' />
+    <Table 
+      columns={columns} 
+      dataSource={tableData} 
+      pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10']}}
+      rowKey='_id' 
+    />
   )
 }
 

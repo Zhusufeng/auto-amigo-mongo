@@ -13,16 +13,22 @@ export default async function handler(
   switch (method) {
     case "GET":
       try {
-        const { id } = req.query;
-        const user = await User.findById(id).populate('gasEntries');
+        const { userId } = req.query;
+        const user = await User.findById(userId).populate('gasEntries');
         res.status(200).json({ success: true, data: user });
       } catch (error) {
-        console.log(error);
-        res.status(400).json({ success: false });
+        res.status(400).json({ 
+          success: false, 
+          errorMessage: String(error),
+        });
       }
       break;
     default:
-      res.status(400).json({ success: false });
+      const defaultErrorMessage = `Invalid method (${method}).`;
+      res.status(400).json({ 
+        success: false, 
+        errorMessage: defaultErrorMessage,  
+      });
       break;
   }
 }

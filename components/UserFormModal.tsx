@@ -1,3 +1,4 @@
+import axios, { AxiosError } from 'axios';
 import { useState } from "react";
 import { mutate } from "swr";
 import { Button, Form, Input, Modal } from 'antd';
@@ -8,7 +9,7 @@ type Props = {
 };
 
 const UserFormModal = ({ isModalOpen, setModalStatus }: Props) => {
-  const contentType = "application/json";
+  const [form] = Form.useForm();
   const [message, setMessage] = useState("");
 
   /* The POST method adds a new entry in the mongodb database. */
@@ -18,25 +19,30 @@ const UserFormModal = ({ isModalOpen, setModalStatus }: Props) => {
     email: string;
   }) => {
     try {
-      const res = await fetch("/api/user", {
-        method: "POST",
-        headers: {
-          Accept: contentType,
-          "Content-Type": contentType,
-        },
-        body: JSON.stringify(values),
+      await axios({
+        method: 'post',
+        url: '/api/user',
+        data: values
       });
 
-      // Throw error with status code in case Fetch API req failed
-      if (!res.ok) {
-        throw new Error(res.status);
-      }
       mutate("/api/user");
-      setModalStatus(false);
-    } catch (error) {
-      setMessage("Failed to add user");
+      closeModal();
+    } catch (error: unknown) {
+      let message = "Failed to add user.";
+      if (error instanceof AxiosError) {
+        if (error?.response?.data?.errorMessage) {
+          message = `${error.response.data.errorMessage} ${message}`;
+        }
+      }
+      setMessage(message);
     }
   };
+
+  const closeModal = () => {
+    form.resetFields();
+    setMessage("");
+    setModalStatus(false);
+  }
 
   return (
     <Modal 
@@ -44,8 +50,9 @@ const UserFormModal = ({ isModalOpen, setModalStatus }: Props) => {
       footer={null}
       closable={false}
     >
-      <p>{message}</p>
+      <p style={{ color: 'red' }}>{message}</p>
       <Form
+        form={form}
         name="user-form"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
@@ -80,7 +87,7 @@ const UserFormModal = ({ isModalOpen, setModalStatus }: Props) => {
           <Button type="primary" htmlType="submit">
             Submit
           </Button>{" "}
-          <Button type="default" onClick={() => setModalStatus(false)}>
+          <Button type="default" onClick={closeModal}>
             Cancel
           </Button>
         </Form.Item>
