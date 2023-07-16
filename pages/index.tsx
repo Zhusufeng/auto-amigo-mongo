@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button, Card, Layout, Space, Tooltip } from "antd";
 import Head from "next/head";
 import { User } from "../lib/types";
+import { MAX_USERS, MAX_GAS_ENTRIES } from "../lib/constants";
 import UserFormModal from "../components/UserFormModal";
 import GasCard from "../components/GasCard";
 import UsersList from "../components/UsersList";
@@ -59,7 +60,8 @@ const Home = () => {
                 </div>
                 <p>
                   This is a small project to practice with MongoDB. 
-                  You can create up to 10 users, and each user can have up to 10 gas log entries. 
+                  You can create up to {MAX_USERS} users, 
+                  and each user can have up to {MAX_GAS_ENTRIES} gas log entries. 
                   Created users will show below. 
                   Select a user to view their gas log or to add to their gas log.
                 </p>

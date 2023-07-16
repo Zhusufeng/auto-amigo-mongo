@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../../lib/dbConnect";
+import { MAX_GAS_ENTRIES } from '../../../lib/constants';
 import Gas from "../../../models/gas.model";
 import User from "../../../models/user.model";
 
@@ -16,7 +17,6 @@ export default async function handler(
       try {
         const { userId } = req.query;
         const user = await User.findById(userId).populate('gasEntries');
-        const MAX_GAS_ENTRIES = 10;
         if (user.gasEntries.length < MAX_GAS_ENTRIES) {
           const gas = new Gas(req.body);
           await gas.save();

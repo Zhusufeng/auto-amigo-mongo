@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../../lib/dbConnect";
+import { MAX_USERS } from "../../../lib/constants";
 import User from "../../../models/user.model";
 
 export default async function handler(
@@ -25,7 +26,6 @@ export default async function handler(
     case "POST":
       try {
         const users = await User.find({});
-        const MAX_USERS = 7;
         if (users.length < MAX_USERS) {
           const user = await User.create(req.body);
           res.status(201).json({ success: true, data: user });
