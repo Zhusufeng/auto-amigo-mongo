@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { useState } from "react";
 import { mutate } from "swr";
-import { Button, Form, Input, Modal } from 'antd';
+import { Button, Form, InputNumber, Modal } from 'antd';
 
 type Props = {
   isModalOpen: boolean;
@@ -15,24 +15,17 @@ const GasFormModal = ({ isModalOpen, userId, setModalStatus }: Props) => {
 
 /* The POST method adds a new entry in the mongodb database. */
 const onFinish = async (values: {
-  previousMileage: string;
-  currentMileage: string;
-  gallons: string;
-  pricePerGallon: string;
+  previousMileage: number;
+  currentMileage: number;
+  gallons: number;
+  pricePerGallon: number;
 }) => {
   try {
-    const { previousMileage, currentMileage, gallons, pricePerGallon } = values;
-    const data = {
-      previousMileage: parseInt(previousMileage, 10),
-      currentMileage: parseInt(currentMileage, 10),
-      gallons: parseInt(gallons, 10),
-      pricePerGallon: parseInt(pricePerGallon, 10),
-    };
     const url = `/api/gas/${userId}`;
     await axios({
       method: 'post',
       url,
-      data
+      data: values
     });
     mutate(`/api/user/${userId}`);
     closeModal();
@@ -68,12 +61,13 @@ const closeModal = () => {
         style={{ maxWidth: 600 }}
         onFinish={onFinish}
       >
+        <h2>Add Gas Entry</h2>
         <Form.Item
           label="Previous Mileage"
           name="previousMileage"
           rules={[{ required: true, message: 'Please input your previous mileage!' }]}
         >
-          <Input />
+          <InputNumber />
         </Form.Item>
 
         <Form.Item
@@ -81,15 +75,15 @@ const closeModal = () => {
           name="currentMileage"
           rules={[{ required: true, message: 'Please input your current mileage!' }]}
         >
-          <Input />
+          <InputNumber />
         </Form.Item>
 
         <Form.Item
-          label="gallons"
+          label="Gallons"
           name="gallons"
           rules={[{ required: true, message: 'Please input your gallons!' }]}
         >
-          <Input />
+          <InputNumber />
         </Form.Item>
 
         <Form.Item
@@ -97,7 +91,7 @@ const closeModal = () => {
           name="pricePerGallon"
           rules={[{ required: true, message: 'Please input your price per gallon!' }]}
         >
-          <Input />
+          <InputNumber />
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
