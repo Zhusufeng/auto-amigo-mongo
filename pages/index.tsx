@@ -1,7 +1,7 @@
 import useSWR, { mutate } from "swr";
 import axios from "axios";
 import { useState } from "react";
-import { Button, Card, Layout, Space, Tooltip, Typography } from "antd";
+import { Button, Card, Layout, Space, Tooltip } from "antd";
 import Head from "next/head";
 import { User } from "../lib/types";
 import { MAX_USERS, MAX_GAS_ENTRIES } from "../lib/constants";

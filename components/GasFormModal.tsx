@@ -1,7 +1,7 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { mutate } from "swr";
-import { Button, Form, InputNumber, Modal } from 'antd';
+import { Button, Form, InputNumber, Modal } from "antd";
 
 type Props = {
   isModalOpen: boolean;
@@ -23,7 +23,7 @@ const onFinish = async (values: {
   try {
     const url = `/api/gas/${userId}`;
     await axios({
-      method: 'post',
+      method: "post",
       url,
       data: values
     });
@@ -52,7 +52,7 @@ const closeModal = () => {
       footer={null}
       closable={false}
     >
-      <p style={{ color: 'red' }}>{message}</p>
+      <p style={{ color: "red" }}>{message}</p>
       <Form
         form={form}
         name="gas-form"
@@ -65,7 +65,7 @@ const closeModal = () => {
         <Form.Item
           label="Previous Mileage"
           name="previousMileage"
-          rules={[{ required: true, message: 'Please input your previous mileage!' }]}
+          rules={[{ required: true, message: "Please input your previous mileage!" }]}
         >
           <InputNumber />
         </Form.Item>
@@ -73,7 +73,7 @@ const closeModal = () => {
         <Form.Item
           label="Current Mileage"
           name="currentMileage"
-          rules={[{ required: true, message: 'Please input your current mileage!' }]}
+          rules={[{ required: true, message: "Please input your current mileage!" }]}
         >
           <InputNumber />
         </Form.Item>
@@ -81,7 +81,7 @@ const closeModal = () => {
         <Form.Item
           label="Gallons"
           name="gallons"
-          rules={[{ required: true, message: 'Please input your gallons!' }]}
+          rules={[{ required: true, message: "Please input your gallons!" }]}
         >
           <InputNumber />
         </Form.Item>
@@ -89,7 +89,7 @@ const closeModal = () => {
         <Form.Item
           label="Price Per Gallon"
           name="pricePerGallon"
-          rules={[{ required: true, message: 'Please input your price per gallon!' }]}
+          rules={[{ required: true, message: "Please input your price per gallon!" }]}
         >
           <InputNumber />
         </Form.Item>

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Gas from './gas.model';
+import Gas from "./gas.model";
 
 const UserSchema = new mongoose.Schema(
   {
