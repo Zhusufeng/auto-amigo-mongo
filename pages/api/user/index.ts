@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../../lib/dbConnect";
-import { MAX_USERS } from "../../../lib/constants";
+import { MAX_USERS, TEXT_LENGTH } from "../../../lib/constants";
 import User from "../../../models/user.model";
 
 export default async function handler(
@@ -27,10 +27,28 @@ export default async function handler(
       try {
         const users = await User.find({});
         if (users.length < MAX_USERS) {
+          const { firstName, lastName, email } = req.body;
+          if (!firstName || !lastName || !email) {
+            throw new Error("Missing information.");
+          }
+          if (
+            typeof firstName !== "string" ||
+            typeof lastName !== "string" ||
+            typeof email !== "string"
+          ) {
+            throw new Error("Incorrect data type.");
+          }
+          if (
+            firstName.length > TEXT_LENGTH ||
+            lastName.length > TEXT_LENGTH ||
+            email.length > TEXT_LENGTH
+          ) {
+            throw new Error("Data size exceeds limits.");
+          }
           const user = await User.create(req.body);
           res.status(201).json({ success: true, data: user });
         } else {
-          const userErrorMessage = `Only ${MAX_USERS} users can be created.`;
+          const userErrorMessage = `There are ${users.length} users. Only ${MAX_USERS} users can be created.`;
           res.status(400).json({ 
             success: false, 
             errorMessage: userErrorMessage,

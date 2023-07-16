@@ -2,6 +2,7 @@ import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { mutate } from "swr";
 import { Button, Form, Input, Modal } from "antd";
+import { TEXT_LENGTH } from "../lib/constants";
 
 type Props = {
   isModalOpen: boolean;
@@ -65,7 +66,7 @@ const UserFormModal = ({ isModalOpen, setModalStatus }: Props) => {
           name="firstName"
           rules={[{ required: true, message: "Please input your first name!" }]}
         >
-          <Input showCount maxLength={20} />
+          <Input showCount maxLength={TEXT_LENGTH} />
         </Form.Item>
 
         <Form.Item
@@ -73,7 +74,7 @@ const UserFormModal = ({ isModalOpen, setModalStatus }: Props) => {
           name="lastName"
           rules={[{ required: true, message: "Please input your last name!" }]}
         >
-          <Input showCount maxLength={20} />
+          <Input showCount maxLength={TEXT_LENGTH} />
         </Form.Item>
 
         <Form.Item
@@ -81,7 +82,7 @@ const UserFormModal = ({ isModalOpen, setModalStatus }: Props) => {
           name="email"
           rules={[{ required: true, type: "email", message: "Please input your email!" }]}
         >
-          <Input showCount maxLength={30} />
+          <Input showCount maxLength={TEXT_LENGTH} />
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
