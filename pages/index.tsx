@@ -43,10 +43,9 @@ const Home = () => {
             setModalStatus={setIsUserModalOpen} 
           />
           
-          <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-            {/* TODO Add instructions */}
+          <Space direction="vertical" size="middle" style={{ width: '70%' }}>
             <Card>
-              <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+              <Space direction="vertical" size="middle">
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <h1>Users</h1>
                   <Tooltip title="Create a new user">
@@ -58,7 +57,12 @@ const Home = () => {
                     </Button>
                   </Tooltip>
                 </div>
-                <p>Select a user to view their gas log or to add to their gas log.</p>
+                <p>
+                  This is a small project to practice with MongoDB. 
+                  You can create up to 10 users, and each user can have up to 10 gas log entries. 
+                  Created users will show below. 
+                  Select a user to view their gas log or to add to their gas log.
+                </p>
                 <UsersList 
                   user={user} 
                   users={users} 
