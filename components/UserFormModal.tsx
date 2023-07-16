@@ -1,7 +1,7 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { mutate } from "swr";
-import { Button, Form, Input, Modal } from 'antd';
+import { Button, Form, Input, Modal } from "antd";
 
 type Props = {
   isModalOpen: boolean;
@@ -20,8 +20,8 @@ const UserFormModal = ({ isModalOpen, setModalStatus }: Props) => {
   }) => {
     try {
       await axios({
-        method: 'post',
-        url: '/api/user',
+        method: "post",
+        url: "/api/user",
         data: values
       });
 
@@ -50,7 +50,7 @@ const UserFormModal = ({ isModalOpen, setModalStatus }: Props) => {
       footer={null}
       closable={false}
     >
-      <p style={{ color: 'red' }}>{message}</p>
+      <p style={{ color: "red" }}>{message}</p>
       <Form
         form={form}
         name="user-form"
@@ -59,28 +59,29 @@ const UserFormModal = ({ isModalOpen, setModalStatus }: Props) => {
         style={{ maxWidth: 600 }}
         onFinish={onFinish}
       >
+        <h2>Add User</h2>
         <Form.Item
           label="First Name"
           name="firstName"
-          rules={[{ required: true, message: 'Please input your first name!' }]}
+          rules={[{ required: true, message: "Please input your first name!" }]}
         >
-          <Input />
+          <Input showCount maxLength={20} />
         </Form.Item>
 
         <Form.Item
           label="Last Name"
           name="lastName"
-          rules={[{ required: true, message: 'Please input your last name!' }]}
+          rules={[{ required: true, message: "Please input your last name!" }]}
         >
-          <Input />
+          <Input showCount maxLength={20} />
         </Form.Item>
 
         <Form.Item
           label="Email"
           name="email"
-          rules={[{ required: true, message: 'Please input your email!' }]}
+          rules={[{ required: true, type: "email", message: "Please input your email!" }]}
         >
-          <Input />
+          <Input showCount maxLength={30} />
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
