@@ -44,9 +44,11 @@ const Home = () => {
           />
           
           <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-            <Card title="Users">
+            {/* TODO Add instructions */}
+            <Card>
               <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <h1>Users</h1>
                   <Tooltip title="Create a new user">
                     <Button 
                       type="primary" 
