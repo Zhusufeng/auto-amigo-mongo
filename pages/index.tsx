@@ -1,7 +1,7 @@
 import useSWR, { mutate } from "swr";
 import axios from "axios";
 import { useState } from "react";
-import { Button, Card, Layout, Space, Tooltip } from "antd";
+import { Button, Card, Layout, Space, Tooltip, Typography } from "antd";
 import Head from "next/head";
 import { User } from "../lib/types";
 import { MAX_USERS, MAX_GAS_ENTRIES } from "../lib/constants";
@@ -12,12 +12,12 @@ import UsersList from "../components/UsersList";
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
 const INITIAL_USER = {
-  _id: '',
-  firstName: '',
-  lastName: '',
-  email: '',
-  createdAt: '',
-  updatedAt: ''
+  _id: "",
+  firstName: "",
+  lastName: "",
+  email: "",
+  createdAt: "",
+  updatedAt: ""
 }
 
 const Home = () => {
@@ -37,17 +37,17 @@ const Home = () => {
         <title>Auto Amigo Mongo</title>
       </Head>
       <Layout style={{ minHeight: "100vh" }}>
-        <Layout.Header style={{ color: "#ffffff" }}>Auto Amigo Mongo</Layout.Header>
-        <Layout.Content style={{ display: 'flex', justifyContent: "center", padding: "20px" }}>
+        <Layout.Header style={{ color: "#ffffff", fontWeight: "bold" }}>Auto Amigo Mongo</Layout.Header>
+        <Layout.Content style={{ display: "flex", justifyContent: "center", padding: "20px" }}>
           <UserFormModal 
             isModalOpen={isUserModalOpen} 
             setModalStatus={setIsUserModalOpen} 
           />
           
-          <Space direction="vertical" size="middle" style={{ width: '70%' }}>
+          <Space direction="vertical" size="middle" style={{ width: "70%" }}>
             <Card>
               <Space direction="vertical" size="middle">
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <h1>Users</h1>
                   <Tooltip title="Create a new user">
                     <Button 
