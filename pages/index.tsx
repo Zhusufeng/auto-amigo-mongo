@@ -35,9 +35,9 @@ const Home = () => {
       <Head>
         <title>Auto Amigo Mongo</title>
       </Head>
-      <Layout style={{ height: "100vh" }}>
+      <Layout style={{ minHeight: "100vh" }}>
         <Layout.Header style={{ color: "#ffffff" }}>Auto Amigo Mongo</Layout.Header>
-        <Layout.Content style={{ margin: "0 auto", padding: "20px" }}>
+        <Layout.Content style={{ display: 'flex', justifyContent: "center", padding: "20px" }}>
           <UserFormModal 
             isModalOpen={isUserModalOpen} 
             setModalStatus={setIsUserModalOpen} 
@@ -67,6 +67,15 @@ const Home = () => {
             {user._id ? <GasCard user={user} /> : null}
           </Space>
         </Layout.Content>
+        <Layout.Footer 
+          style={{ 
+            padding: "20px", 
+            color: "#ffffff", 
+            backgroundColor: "#001529" 
+          }}
+        >
+          Made by <a href="https://github.com/Zhusufeng">Lisa</a>
+        </Layout.Footer>
       </Layout>
     </>
   );
