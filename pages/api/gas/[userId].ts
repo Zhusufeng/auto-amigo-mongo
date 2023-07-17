@@ -18,13 +18,30 @@ export default async function handler(
         const { userId } = req.query;
         const user = await User.findById(userId).populate("gasEntries");
         if (user.gasEntries.length < MAX_GAS_ENTRIES) {
-          const gas = new Gas(req.body);
+          const { previousMileage, currentMileage, gallons, pricePerGallon } = req.body;
+          if (!previousMileage || !currentMileage || !gallons || !pricePerGallon) {
+            throw new Error("Missing information.");
+          }
+          if (
+            typeof previousMileage !== "number" ||
+            typeof currentMileage !== "number" ||
+            typeof gallons !== "number" ||
+            typeof pricePerGallon !== "number"
+          ) {
+            throw new Error("Incorrect data type.");
+          }
+          const gas = new Gas({
+            previousMileage,
+            currentMileage,
+            gallons,
+            pricePerGallon
+          });
           await gas.save();
           user.gasEntries.push(gas);
           await user.save();
           res.status(201).json({ success: true, data: gas });
         } else {
-          const gasErrorMessage = `Only ${MAX_GAS_ENTRIES} gas entries can be added.`;
+          const gasErrorMessage = `There are ${user.gasEntries.length} gas entries. Only ${MAX_GAS_ENTRIES} gas entries can be added.`;
           res.status(400).json({ 
             success: false, 
             errorMessage: gasErrorMessage
