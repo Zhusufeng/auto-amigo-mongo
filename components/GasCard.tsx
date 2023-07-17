@@ -27,7 +27,7 @@ const GasCard = ({ user }: Props) => {
       <Card>
         <Space direction="vertical" size="middle" style={{ display: "flex" }}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <h1>{`${user.firstName} ${user.lastName}"s Gas History`}</h1>
+            <h1>{`${user.firstName} ${user.lastName}'s Gas History`}</h1>
             <Tooltip title={`Add a new gas entry for user, ${user.firstName} ${user.lastName}`}>
               <Button type="primary" onClick={() => setIsGasModalOpen(true)}>Add Gas Entry</Button>
             </Tooltip>
