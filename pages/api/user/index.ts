@@ -45,7 +45,11 @@ export default async function handler(
           ) {
             throw new Error("Data size exceeds limits.");
           }
-          const user = await User.create(req.body);
+          const user = await User.create({
+            firstName,
+            lastName,
+            email
+          });
           res.status(201).json({ success: true, data: user });
         } else {
           const userErrorMessage = `There are ${users.length} users. Only ${MAX_USERS} users can be created.`;
