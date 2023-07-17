@@ -46,7 +46,26 @@ const Home = () => {
           
           <Space direction="vertical" size="middle" style={{ width: "70%" }}>
             <Card>
-              <Space direction="vertical" size="middle">
+              <h1>Background</h1>
+              <p>
+                This is a mini version of Auto Amigo. 
+                I made this to brush up on MongoDB, use Next.js&apos; pages API (serverless), 
+                and deploy on Vercel. 
+                It mimics Auto Amigo in the way that there can be multiple users, and their gas usage
+                and spending can be saved to the web app.
+              </p>
+              <h1>Instructions</h1>
+              <p>
+                Since this is a mini version, only {MAX_USERS} users can be created.
+                Each user can only have up to {MAX_GAS_ENTRIES} gas log entries. 
+                Everyone can view the users&apos; gas logs.
+                If there are no users, create a user.
+                Created users will show under &quot;Users&quot;. 
+                Select a user to view their gas log or to add to their gas log.
+              </p>
+            </Card>
+            <Card>
+              <Space direction="vertical" size="middle"  style={{ display: "flex" }}>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <h1>Users</h1>
                   <Tooltip title="Create a new user">
@@ -58,13 +77,6 @@ const Home = () => {
                     </Button>
                   </Tooltip>
                 </div>
-                <p>
-                  This is a small project to practice with MongoDB. 
-                  You can create up to {MAX_USERS} users, 
-                  and each user can have up to {MAX_GAS_ENTRIES} gas log entries. 
-                  Created users will show below. 
-                  Select a user to view their gas log or to add to their gas log.
-                </p>
                 <UsersList 
                   user={user} 
                   users={users} 
