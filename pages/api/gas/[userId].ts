@@ -19,7 +19,11 @@ export default async function handler(
         const user = await User.findById(userId).populate("gasEntries");
         if (user.gasEntries.length < MAX_GAS_ENTRIES) {
           const { previousMileage, currentMileage, gallons, pricePerGallon } = req.body;
-          if (!previousMileage || !currentMileage || !gallons || !pricePerGallon) {
+          if (
+            previousMileage !== undefined || 
+            currentMileage !== undefined || 
+            gallons !== undefined || 
+            pricePerGallon !== undefined) {
             throw new Error("Missing information.");
           }
           if (
