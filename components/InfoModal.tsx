@@ -14,6 +14,7 @@ const InfoModal = ({ isModalOpen, setModalStatus }: Props) => {
   return (
     <Modal 
       open={isModalOpen}
+      onCancel={handleOk}
       footer={[
         <Button type="primary" key="ok" onClick={handleOk}>
           OK
