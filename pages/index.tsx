@@ -1,10 +1,10 @@
 import useSWR, { mutate } from "swr";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button, Card, Layout, Space, Tooltip } from "antd";
 import Head from "next/head";
 import { User } from "../lib/types";
-import InfoModal from "../components/InfoModal";
+import Header from "../components/Header";
 import UserFormModal from "../components/UserFormModal";
 import GasCard from "../components/GasCard";
 import UsersList from "../components/UsersList";
@@ -22,13 +22,8 @@ const INITIAL_USER = {
 
 const Home = () => {
   const [user, setUser] = useState<User>(INITIAL_USER);
-  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
   const { data: users, error: userError } = useSWR("/api/user", fetcher);
-
-  useEffect(() => {
-    setIsInfoModalOpen(true);
-  }, [])
 
   const userHandleClick = (user: User) => {
     setUser(user);
@@ -41,12 +36,8 @@ const Home = () => {
         <title>Auto Amigo Mongo</title>
       </Head>
       <Layout style={{ minHeight: "100vh" }}>
-        <Layout.Header style={{ color: "#ffffff", fontWeight: "bold" }}>Auto Amigo Mongo</Layout.Header>
+        <Header />
         <Layout.Content style={{ display: "flex", justifyContent: "center", padding: "20px" }}>
-          <InfoModal 
-            isModalOpen={isInfoModalOpen} 
-            setModalStatus={setIsInfoModalOpen} 
-          />
           <UserFormModal 
             isModalOpen={isUserModalOpen} 
             setModalStatus={setIsUserModalOpen} 
