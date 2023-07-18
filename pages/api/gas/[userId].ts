@@ -20,10 +20,10 @@ export default async function handler(
         if (user.gasEntries.length < MAX_GAS_ENTRIES) {
           const { previousMileage, currentMileage, gallons, pricePerGallon } = req.body;
           if (
-            previousMileage !== undefined || 
-            currentMileage !== undefined || 
-            gallons !== undefined || 
-            pricePerGallon !== undefined) {
+            previousMileage === undefined || 
+            currentMileage === undefined || 
+            gallons === undefined || 
+            pricePerGallon === undefined) {
             throw new Error("Missing information.");
           }
           if (
