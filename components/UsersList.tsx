@@ -1,5 +1,5 @@
-import { Tag, Tooltip } from 'antd';
-import { User } from '../lib/types';
+import { Tag, Tooltip } from "antd";
+import { User } from "../lib/types";
 
 type Props = {
   user: User;
