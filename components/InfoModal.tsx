@@ -22,23 +22,29 @@ const InfoModal = ({ isModalOpen, setModalStatus }: Props) => {
       ]}
     >
       <div>
-        <h1>Background</h1>
-        <p>
-          This is a mini version of Auto Amigo. 
-          I made this to brush up on MongoDB, use Next.js&apos; pages API (serverless), 
-          and deploy on Vercel. 
-          It mimics Auto Amigo in the way that there can be multiple users, and their gas usage
-          and spending can be saved to the web app.
-        </p>
         <h1>Instructions</h1>
         <p>
-          Since this is a mini version, only {MAX_USERS} users can be created.
-          Each user can only have up to {MAX_GAS_ENTRIES} gas log entries. 
-          Everyone can view the users&apos; gas logs.
-          If there are no users, create a user.
-          Created users will show under &quot;Users&quot;. 
-          Select a user to view their gas log or to add to their gas log.
+          This is a mini version of my Auto Amigo project, so there is limited functionality. 
+          To learn more, checkout the 
+          {" "}<a href="https://github.com/Zhusufeng/auto-amigo-mongo" target="_blank" rel="noopener">repo</a>.
         </p>
+
+        <h2>How to Use</h2>
+        <ol>
+          <li>Created users will show under &quot;Users&quot;.</li>
+          <li>If there are no users, create a user by clicking the &quot;Create User&quot; button and fill out the form.</li>
+          <li>
+            Click on a user to view their gas log. 
+            An &quot;Add Gas Entry&quot; button will appear that allows you to add to their gas log.
+          </li>
+        </ol>
+        
+        <h2>Limitations</h2>
+        <ul>
+          <li>Only {MAX_USERS} users can be created.</li>
+          <li>Each user can only have up to {MAX_GAS_ENTRIES} gas log entries.</li>
+          <li>Everyone can view the users&apos; gas logs.</li>
+        </ul>
       </div>
     </Modal>
   )
