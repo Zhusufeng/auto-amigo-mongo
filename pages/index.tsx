@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Button, Card, Layout, Space, Tooltip } from "antd";
 import Head from "next/head";
+import { setup } from "../lib/csrf";
 import { User } from "../lib/types";
 import Header from "../components/Header";
 import UserFormModal from "../components/UserFormModal";
@@ -80,5 +81,11 @@ const Home = () => {
     </>
   );
 };
+
+export const getServerSideProps = setup(async (req, res) => {
+  return {
+    props: {},
+  };
+ });
 
 export default Home;

@@ -1,9 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { csrf } from "../../../lib/csrf";
 import dbConnect from "../../../lib/dbConnect";
 import { MAX_USERS, TEXT_LENGTH } from "../../../lib/constants";
 import User from "../../../models/user.model";
 
-export default async function handler(
+async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -74,3 +75,5 @@ export default async function handler(
       break;
   }
 }
+
+export default csrf(handler);
