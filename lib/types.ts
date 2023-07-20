@@ -5,7 +5,7 @@ export type User = {
   email: string;
   createdAt: string;
   updatedAt: string;
-}
+};
 
 export type Log = {
   _id: string;

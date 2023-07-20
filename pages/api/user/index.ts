@@ -4,10 +4,7 @@ import dbConnect from "../../../lib/dbConnect";
 import { MAX_USERS, TEXT_LENGTH } from "../../../lib/constants";
 import User from "../../../models/user.model";
 
-async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req;
 
   await dbConnect();
@@ -15,10 +12,12 @@ async function handler(
   switch (method) {
     case "GET":
       try {
-        const user = await User.find({}); /* find all the data in our database */
+        const user = await User.find(
+          {}
+        ); /* find all the data in our database */
         res.status(200).json({ success: true, data: user });
       } catch (error) {
-        res.status(400).json({ 
+        res.status(400).json({
           success: false,
           errorMessage: String(error),
         });
@@ -49,28 +48,28 @@ async function handler(
           const user = await User.create({
             firstName,
             lastName,
-            email
+            email,
           });
           res.status(201).json({ success: true, data: user });
         } else {
           const userErrorMessage = `There are ${users.length} users. Only ${MAX_USERS} users can be created.`;
-          res.status(400).json({ 
-            success: false, 
+          res.status(400).json({
+            success: false,
             errorMessage: userErrorMessage,
           });
         }
       } catch (error) {
-        res.status(400).json({ 
-          success: false, 
+        res.status(400).json({
+          success: false,
           errorMessage: String(error),
         });
       }
       break;
     default:
       const defaultErrorMessage = `Invalid method (${method}).`;
-      res.status(400).json({ 
-        success: false, 
-        errorMessage: defaultErrorMessage,  
+      res.status(400).json({
+        success: false,
+        errorMessage: defaultErrorMessage,
       });
       break;
   }

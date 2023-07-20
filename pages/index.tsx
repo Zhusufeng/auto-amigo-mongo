@@ -18,8 +18,8 @@ const INITIAL_USER = {
   lastName: "",
   email: "",
   createdAt: "",
-  updatedAt: ""
-}
+  updatedAt: "",
+};
 
 const Home = () => {
   const [user, setUser] = useState<User>(INITIAL_USER);
@@ -29,7 +29,7 @@ const Home = () => {
   const userHandleClick = (user: User) => {
     setUser(user);
     mutate(`/api/user/${user._id}`);
-  }
+  };
 
   return (
     <>
@@ -38,41 +38,49 @@ const Home = () => {
       </Head>
       <Layout style={{ minHeight: "100vh" }}>
         <Header />
-        <Layout.Content style={{ display: "flex", justifyContent: "center", padding: "20px" }}>
-          <UserFormModal 
-            isModalOpen={isUserModalOpen} 
-            setModalStatus={setIsUserModalOpen} 
+        <Layout.Content
+          style={{ display: "flex", justifyContent: "center", padding: "20px" }}
+        >
+          <UserFormModal
+            isModalOpen={isUserModalOpen}
+            setModalStatus={setIsUserModalOpen}
           />
-          
+
           <Space direction="vertical" size="middle" style={{ width: "70%" }}>
             <Card>
-              <Space direction="vertical" size="middle"  style={{ display: "flex" }}>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Space
+                direction="vertical"
+                size="middle"
+                style={{ display: "flex" }}
+              >
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
                   <h1>Users</h1>
                   <Tooltip title="Create a new user">
-                    <Button 
-                      type="primary" 
+                    <Button
+                      type="primary"
                       onClick={() => setIsUserModalOpen(true)}
                     >
                       Create User
                     </Button>
                   </Tooltip>
                 </div>
-                <UsersList 
-                  user={user} 
-                  users={users} 
-                  userHandleClick={userHandleClick} 
+                <UsersList
+                  user={user}
+                  users={users}
+                  userHandleClick={userHandleClick}
                 />
               </Space>
             </Card>
             {user._id ? <GasCard user={user} /> : null}
           </Space>
         </Layout.Content>
-        <Layout.Footer 
-          style={{ 
-            padding: "20px", 
-            color: "#ffffff", 
-            backgroundColor: "#001529" 
+        <Layout.Footer
+          style={{
+            padding: "20px",
+            color: "#ffffff",
+            backgroundColor: "#001529",
           }}
         >
           Made by <a href="https://github.com/Zhusufeng">Lisa</a>
@@ -86,6 +94,6 @@ export const getServerSideProps = setup(async (req, res) => {
   return {
     props: {},
   };
- });
+});
 
 export default Home;

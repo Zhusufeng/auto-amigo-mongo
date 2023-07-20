@@ -23,7 +23,7 @@ const UserFormModal = ({ isModalOpen, setModalStatus }: Props) => {
       await axios({
         method: "post",
         url: "/api/user",
-        data: values
+        data: values,
       });
 
       mutate("/api/user");
@@ -43,14 +43,10 @@ const UserFormModal = ({ isModalOpen, setModalStatus }: Props) => {
     form.resetFields();
     setMessage("");
     setModalStatus(false);
-  }
+  };
 
   return (
-    <Modal 
-      open={isModalOpen} 
-      footer={null}
-      closable={false}
-    >
+    <Modal open={isModalOpen} footer={null} closable={false}>
       <p style={{ color: "red" }}>{message}</p>
       <Form
         form={form}
@@ -80,7 +76,13 @@ const UserFormModal = ({ isModalOpen, setModalStatus }: Props) => {
         <Form.Item
           label="Email"
           name="email"
-          rules={[{ required: true, type: "email", message: "Please input your email!" }]}
+          rules={[
+            {
+              required: true,
+              type: "email",
+              message: "Please input your email!",
+            },
+          ]}
         >
           <Input showCount maxLength={TEXT_LENGTH} />
         </Form.Item>
@@ -95,7 +97,7 @@ const UserFormModal = ({ isModalOpen, setModalStatus }: Props) => {
         </Form.Item>
       </Form>
     </Modal>
-  )
+  );
 };
 
 export default UserFormModal;
