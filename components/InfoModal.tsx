@@ -1,5 +1,5 @@
 import { Button, Modal } from "antd";
-import { MAX_USERS, MAX_GAS_ENTRIES } from "../lib/constants";
+import { MAX_GAS_ENTRIES, MAX_USERS } from "../lib/constants";
 
 type Props = {
   isModalOpen: boolean;

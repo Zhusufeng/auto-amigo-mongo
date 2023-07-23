@@ -1,14 +1,14 @@
-import useSWR, { mutate } from "swr";
-import axios from "axios";
-import { useState } from "react";
 import { Button, Card, Layout, Space, Tooltip } from "antd";
+import axios from "axios";
 import Head from "next/head";
-import { setup } from "../lib/csrf";
-import { User } from "../lib/types";
+import { useState } from "react";
+import useSWR, { mutate } from "swr";
+import GasCard from "../components/GasCard";
 import Header from "../components/Header";
 import UserFormModal from "../components/UserFormModal";
-import GasCard from "../components/GasCard";
 import UsersList from "../components/UsersList";
+import { setup } from "../lib/csrf";
+import { User } from "../lib/types";
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 

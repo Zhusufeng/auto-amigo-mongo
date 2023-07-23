@@ -1,10 +1,10 @@
-import useSWR from "swr";
+import { Button, Card, Space, Tooltip } from "antd";
 import axios from "axios";
 import { useState } from "react";
-import { Button, Card, Space, Tooltip } from "antd";
-import { User } from "../lib/types";
+import useSWR from "swr";
 import GasFormModal from "../components/GasFormModal";
 import GasTable from "../components/GasTable";
+import { User } from "../lib/types";
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 

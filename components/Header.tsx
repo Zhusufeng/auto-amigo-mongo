@@ -1,5 +1,5 @@
+import { Button, Layout } from "antd";
 import { useState } from "react";
-import { Layout, Button } from "antd";
 import InfoModal from "./InfoModal";
 
 const Header = () => {

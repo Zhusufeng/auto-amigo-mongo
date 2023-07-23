@@ -1,7 +1,7 @@
+import { Button, Form, InputNumber, Modal } from "antd";
 import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { mutate } from "swr";
-import { Button, Form, InputNumber, Modal } from "antd";
 
 type Props = {
   isModalOpen: boolean;

@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { MAX_GAS_ENTRIES } from "../../../lib/constants";
 import { csrf } from "../../../lib/csrf";
 import dbConnect from "../../../lib/dbConnect";
-import { MAX_GAS_ENTRIES } from "../../../lib/constants";
 import Gas from "../../../models/gas.model";
 import User from "../../../models/user.model";
 
