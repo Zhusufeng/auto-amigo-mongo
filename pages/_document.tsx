@@ -1,4 +1,4 @@
-import { Html, Head, Main, NextScript } from "next/document";
+import { Head, Html, Main, NextScript } from "next/document";
 
 const bodyStyle: React.CSSProperties = {
   margin: 0,
@@ -7,7 +7,9 @@ const bodyStyle: React.CSSProperties = {
 export default function Document() {
   return (
     <Html lang="en">
-      <Head />
+      <Head>
+        <link rel="shortcut icon" href="/favicon.ico" />
+      </Head>
       <body style={bodyStyle}>
         <Main />
         <NextScript />

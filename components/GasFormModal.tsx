@@ -1,7 +1,7 @@
+import { Button, Form, InputNumber, Modal } from "antd";
 import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { mutate } from "swr";
-import { Button, Form, InputNumber, Modal } from "antd";
 
 type Props = {
   isModalOpen: boolean;
@@ -13,45 +13,41 @@ const GasFormModal = ({ isModalOpen, userId, setModalStatus }: Props) => {
   const [form] = Form.useForm();
   const [message, setMessage] = useState("");
 
-/* The POST method adds a new entry in the mongodb database. */
-const onFinish = async (values: {
-  previousMileage: number;
-  currentMileage: number;
-  gallons: number;
-  pricePerGallon: number;
-}) => {
-  try {
-    const url = `/api/gas/${userId}`;
-    await axios({
-      method: "post",
-      url,
-      data: values
-    });
-    mutate(`/api/user/${userId}`);
-    closeModal();
-  } catch (error) {
-    let message = "Failed to add gas entry.";
+  /* The POST method adds a new entry in the mongodb database. */
+  const onFinish = async (values: {
+    previousMileage: number;
+    currentMileage: number;
+    gallons: number;
+    pricePerGallon: number;
+  }) => {
+    try {
+      const url = `/api/gas/${userId}`;
+      await axios({
+        method: "post",
+        url,
+        data: values,
+      });
+      mutate(`/api/user/${userId}`);
+      closeModal();
+    } catch (error) {
+      let message = "Failed to add gas entry.";
       if (error instanceof AxiosError) {
         if (error?.response?.data?.errorMessage) {
           message = `${error.response.data.errorMessage} ${message}`;
         }
       }
       setMessage(message);
-  }
-};
+    }
+  };
 
-const closeModal = () => {
-  form.resetFields();
-  setMessage("");
-  setModalStatus(false);
-}
+  const closeModal = () => {
+    form.resetFields();
+    setMessage("");
+    setModalStatus(false);
+  };
 
   return (
-    <Modal 
-      open={isModalOpen}
-      footer={null}
-      closable={false}
-    >
+    <Modal open={isModalOpen} footer={null} closable={false}>
       <p style={{ color: "red" }}>{message}</p>
       <Form
         form={form}
@@ -65,7 +61,9 @@ const closeModal = () => {
         <Form.Item
           label="Previous Mileage"
           name="previousMileage"
-          rules={[{ required: true, message: "Please input your previous mileage!" }]}
+          rules={[
+            { required: true, message: "Please input your previous mileage!" },
+          ]}
         >
           <InputNumber />
         </Form.Item>
@@ -73,7 +71,9 @@ const closeModal = () => {
         <Form.Item
           label="Current Mileage"
           name="currentMileage"
-          rules={[{ required: true, message: "Please input your current mileage!" }]}
+          rules={[
+            { required: true, message: "Please input your current mileage!" },
+          ]}
         >
           <InputNumber />
         </Form.Item>
@@ -89,7 +89,9 @@ const closeModal = () => {
         <Form.Item
           label="Price Per Gallon"
           name="pricePerGallon"
-          rules={[{ required: true, message: "Please input your price per gallon!" }]}
+          rules={[
+            { required: true, message: "Please input your price per gallon!" },
+          ]}
         >
           <InputNumber />
         </Form.Item>
@@ -104,7 +106,7 @@ const closeModal = () => {
         </Form.Item>
       </Form>
     </Modal>
-  )
+  );
 };
 
 export default GasFormModal;

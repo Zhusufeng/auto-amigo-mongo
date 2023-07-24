@@ -1,14 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { MAX_GAS_ENTRIES } from "../../../lib/constants";
 import { csrf } from "../../../lib/csrf";
 import dbConnect from "../../../lib/dbConnect";
-import { MAX_GAS_ENTRIES } from "../../../lib/constants";
 import Gas from "../../../models/gas.model";
 import User from "../../../models/user.model";
 
-async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req;
 
   await dbConnect();
@@ -19,12 +16,14 @@ async function handler(
         const { userId } = req.query;
         const user = await User.findById(userId).populate("gasEntries");
         if (user.gasEntries.length < MAX_GAS_ENTRIES) {
-          const { previousMileage, currentMileage, gallons, pricePerGallon } = req.body;
+          const { previousMileage, currentMileage, gallons, pricePerGallon } =
+            req.body;
           if (
-            previousMileage === undefined || 
-            currentMileage === undefined || 
-            gallons === undefined || 
-            pricePerGallon === undefined) {
+            previousMileage === undefined ||
+            currentMileage === undefined ||
+            gallons === undefined ||
+            pricePerGallon === undefined
+          ) {
             throw new Error("Missing information.");
           }
           if (
@@ -39,7 +38,7 @@ async function handler(
             previousMileage,
             currentMileage,
             gallons,
-            pricePerGallon
+            pricePerGallon,
           });
           await gas.save();
           user.gasEntries.push(gas);
@@ -47,23 +46,23 @@ async function handler(
           res.status(201).json({ success: true, data: gas });
         } else {
           const gasErrorMessage = `There are ${user.gasEntries.length} gas entries. Only ${MAX_GAS_ENTRIES} gas entries can be added.`;
-          res.status(400).json({ 
-            success: false, 
-            errorMessage: gasErrorMessage
+          res.status(400).json({
+            success: false,
+            errorMessage: gasErrorMessage,
           });
         }
       } catch (error) {
-        res.status(400).json({ 
-          success: false, 
+        res.status(400).json({
+          success: false,
           errorMessage: String(error),
         });
       }
       break;
     default:
       const defaultErrorMessage = `Invalid method (${method}).`;
-      res.status(400).json({ 
-        success: false, 
-        errorMessage: defaultErrorMessage,  
+      res.status(400).json({
+        success: false,
+        errorMessage: defaultErrorMessage,
       });
       break;
   }
