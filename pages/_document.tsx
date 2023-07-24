@@ -7,7 +7,9 @@ const bodyStyle: React.CSSProperties = {
 export default function Document() {
   return (
     <Html lang="en">
-      <Head />
+      <Head>
+        <link rel="shortcut icon" href="/favicon.ico" />
+      </Head>
       <body style={bodyStyle}>
         <Main />
         <NextScript />
